@@ -1,0 +1,36 @@
+{
+    "manifest_version": 3,
+    "name": "Word-Fly",
+    "version": "1.0",
+    "description": "A Chrome extension for word translation and definition",
+    "permissions": [
+        "activeTab",
+        "storage",
+        "scripting"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "fly48.png"
+    },
+    "icons": {
+        "16": "fly48.png",
+        "48": "fly48.png",
+        "128": "fly128.png"
+    }
+}

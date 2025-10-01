@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Word-Fly Налаштування</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <h1>Word-Fly Налаштування 🚀</h1>
+    
+    <div class="setting-block">
+        <label for="targetLang">Цільова мова перекладу:</label>
+        <select id="targetLang">
+            <option value="UK">Українська</option>
+            <option value="EN">Англійська</option>
+            <option value="DE">Німецька</option>
+            <option value="FR">Французька</option>
+            </select>
+        <p class="note">Збережено!</p>
+    </div>
+
+    <div class="setting-block">
+        <label for="toggleSite">
+            <input type="checkbox" id="toggleSite">
+            Увімкнути Word-Fly на <span id="currentDomain"></span>
+        </label>
+        <p class="note">Налаштування застосовано!</p>
+    </div>
+
+    <button id="toggleListBtn">Показати/Сховати список сайтів</button>
+    <div id="enabledSitesContainer" class="hidden">
+        <h4>Список активних сайтів:</h4>
+        <ul id="enabledSites"></ul>
+    </div>
+
+    <p class="footer">Використовує DeepL API.</p>
+
+    <script src="popup.js"></script>
+</body>
+</html>

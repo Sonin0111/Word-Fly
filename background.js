@@ -1,3 +1,5 @@
+import { CONFIG } from "./config.js";
+
 const DEEPL_API_KEY = CONFIG.DEEPL_API_KEY;
 
 const DEEPL_URL = "https://api-free.deepl.com/v2/translate";

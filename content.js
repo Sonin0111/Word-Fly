@@ -62,6 +62,9 @@ function checkActivationAndRun(selectedText, x, y) {
 }
 
 document.addEventListener("mouseup", (event) => {
+  if (!event.ctrlKey) {
+    return;
+  }
   const selection = window.getSelection();
   const selectedText = selection.toString().trim();
 

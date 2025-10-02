@@ -21,33 +21,30 @@ document.addEventListener("DOMContentLoaded", () => {
       toggleCheckbox.checked = enabledDomains.includes(domain);
     });
 
-    toggleCheckbox.addEventListener("change", () =>{
-      chrome.storage.sync.get("enabledDomains",(data) => {
+    toggleCheckbox.addEventListener("change", () => {
+      chrome.storage.sync.get("enabledDomains", (data) => {
         let enabledDomains = data.enabledDomains || [];
 
         if (toggleCheckbox.checked) {
-          if (!enabledDomains.includes(domain)){
+          if (!enabledDomains.includes(domain)) {
             enabledDomains.push(domain);
           }
-        }else{
-          enabledDomains = enabledDomains.filter(d => d !== domain);
+        } else {
+          enabledDomains = enabledDomains.filter((d) => d !== domain);
         }
 
-        chrome.storage.sync.set({ enabledDomains}, () => {
+        chrome.storage.sync.set({ enabledDomains }, () => {
           updateSiteList(enabledDomains);
           toggleNote.style.opacity = "1";
           setTimeout(() => (toggleNote.style.opacity = "0"), 1500);
         });
       });
-      });
     });
-      
-
+  });
 
   chrome.storage.sync.get("targetLang", (data) => {
     langSelect.value = data.targetLang || "UK";
   });
-
 
   langSelect.addEventListener("change", () => {
     chrome.storage.sync.set({ targetLang: langSelect.value }, () => {
@@ -58,19 +55,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   toggleListBtn.addEventListener("click", () => {
     siteListContainer.classList.toggle("hidden");
+
+    if (!siteListContainer.classList.contains("hidden")) {
+      chrome.storage.sync.get("enabledDomains", (data) => {
+        updateSiteList(data.enabledDomains || []);
+      });
+    }
   });
 
   function updateSiteList(domains) {
     siteList.innerHTML = "";
-    if (domains.length === 0){
+    if (domains.length === 0) {
       siteList.innerHTML = "<li>No enabled sites</li>";
       return;
     }
-    domains.forEach(domain => {
+    domains.forEach((domain) => {
       const li = document.createElement("li");
       li.textContent = domain;
       siteList.appendChild(li);
     });
   }
-
 });

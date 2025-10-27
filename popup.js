@@ -71,8 +71,42 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     domains.forEach((domain) => {
       const li = document.createElement("li");
-      li.textContent = domain;
+      li.className = "site-item";
+      
+      const domainSpan = document.createElement("span");
+      domainSpan.textContent = domain;
+      domainSpan.className = "domain-name";
+      
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "×";
+      deleteBtn.className = "delete-btn";
+      deleteBtn.title = "Видалити сайт";
+      
+      deleteBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        removeSite(domain);
+      });
+      
+      li.appendChild(domainSpan);
+      li.appendChild(deleteBtn);
       siteList.appendChild(li);
+    });
+  }
+
+  function removeSite(domain) {
+    chrome.storage.sync.get("enabledDomains", (data) => {
+      let enabledDomains = data.enabledDomains || [];
+      enabledDomains = enabledDomains.filter((d) => d !== domain);
+      
+      chrome.storage.sync.set({ enabledDomains }, () => {
+        updateSiteList(enabledDomains);
+        toggleNote.style.opacity = "1";
+        toggleNote.textContent = `Сайт ${domain} видаленно!`;
+        setTimeout(() => {
+          toggleNote.style.opacity = "0";
+          toggleNote.textContent = "Налаштування застосовано!";
+        }, 1500);
+      });
     });
   }
 });

@@ -12,7 +12,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       const targetLang = data.targetLang || "UK";
 
       const params = new URLSearchParams({
-        auth_key: DEEPL_API_KEY,
         text: textToTranslate,
         target_lang: targetLang,
       });
@@ -21,6 +20,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": `DeepL-Auth-Key ${DEEPL_API_KEY}`,
         },
         body: params,
       })

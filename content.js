@@ -68,7 +68,7 @@ document.addEventListener("mouseup", (event) => {
   const selection = window.getSelection();
   const selectedText = selection.toString().trim();
 
-  if (selectedText.length > 3) {
+  if (selectedText.length > 3 && selectedText.length < 500) {
     const range = selection.getRangeAt(0);
     const rect = range.getBoundingClientRect();
 

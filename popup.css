@@ -65,3 +65,50 @@ select {
   background: #f2f2f2;
   border-radius: 5px;
 }
+
+#enabledSites { 
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.site-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 8px;
+  margin: 2px 0;
+  background: #fff;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+}
+
+.domain-name {
+  flex: 1;
+  font-size: 1em;
+  color: #333;
+}
+
+.delete-btn {
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: #cc0000;
+}
+
+.delete-btn:active {
+  background: #aa0000;
+}

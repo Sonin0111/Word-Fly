@@ -41,6 +41,39 @@ select {
     box-sizing: border-box;
 }
 
+.api-key-container {
+    display: flex;
+    gap: 6px;
+}
+
+#deeplApiKey {
+    flex: 1;
+    padding: 7px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 0.9em;
+}
+
+#saveApiKeyBtn {
+    padding: 7px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: background-color 0.2s ease;
+}
+
+#saveApiKeyBtn:hover {
+    background-color: #45a049;
+}
+
+#saveApiKeyBtn:active {
+    background-color: #3d8b40;
+}
+
 .note {
     font-size: 0.8em;
     color: green;

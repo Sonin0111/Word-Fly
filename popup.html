@@ -20,6 +20,15 @@
     </div>
 
     <div class="setting-block">
+        <label for="deeplApiKey">DeepL API Ключ:</label>
+        <div class="api-key-container">
+            <input type="password" id="deeplApiKey" placeholder="Введіть ваш API ключ">
+            <button id="saveApiKeyBtn">Зберегти</button>
+        </div>
+        <p class="note" id="apiKeyNote">Ключ збережено!</p>
+    </div>
+
+    <div class="setting-block">
         <label for="toggleSite">
             <input type="checkbox" id="toggleSite">
             Увімкнути Word-Fly на <span id="currentDomain"></span>

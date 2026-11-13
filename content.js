@@ -1,7 +1,26 @@
 const TRANSLATION_POPUP_ID = "word-fly-translation-popup";
 const currentDomain = window.location.hostname;
 
-function showTranslation(text, x, y) {
+function positionPopup(popup, rect) {
+  const popupHeight = popup.offsetHeight;
+  const gap = 15;
+
+  const spaceBelow = window.innerHeight - rect.bottom;
+  let top;
+
+  if (spaceBelow < popupHeight + gap && rect.top > popupHeight + gap) {
+    top = window.scrollY + rect.top - popupHeight - gap;
+  } else if (spaceBelow < popupHeight + gap) {
+    top = Math.max(window.scrollY + 5, window.scrollY + rect.top - popupHeight - gap);
+  } else {
+    top = window.scrollY + rect.bottom + gap;
+  }
+
+  popup.style.top = `${top}px`;
+  popup.style.left = `${window.scrollX + rect.left}px`;
+}
+
+function showTranslation(text, rect) {
   let popup = document.getElementById(TRANSLATION_POPUP_ID);
   if (popup) {
     popup.remove();
@@ -11,8 +30,6 @@ function showTranslation(text, x, y) {
   popup.id = TRANSLATION_POPUP_ID;
   popup.style.cssText = `
         position: absolute;
-        top: ${y + 15}px;
-        left: ${x}px;
         max-width: 300px;
         padding: 8px 12px;
         background-color: #333;
@@ -28,6 +45,7 @@ function showTranslation(text, x, y) {
   popup.textContent = "Translating...";
 
   document.body.appendChild(popup);
+  positionPopup(popup, rect);
 
   popup.addEventListener("click", () => popup.remove());
 
@@ -43,11 +61,12 @@ function showTranslation(text, x, y) {
           response
         );
       }
+      positionPopup(popup, rect);
     }
   );
 }
 
-function checkActivationAndRun(selectedText, x, y) {
+function checkActivationAndRun(selectedText, rect) {
   chrome.storage.sync.get("enabledDomains", (data) => {
     const enabledDomains = data.enabledDomains || [];
 
@@ -57,7 +76,7 @@ function checkActivationAndRun(selectedText, x, y) {
       );
       return;
     }
-    showTranslation(selectedText, x, y);
+    showTranslation(selectedText, rect);
   });
 }
 
@@ -72,10 +91,7 @@ document.addEventListener("mouseup", (event) => {
     const range = selection.getRangeAt(0);
     const rect = range.getBoundingClientRect();
 
-    const x = window.scrollX + rect.left;
-    const y = window.scrollY + rect.bottom;
-
-    checkActivationAndRun(selectedText, x, y);
+    checkActivationAndRun(selectedText, rect);
   }
 });
 

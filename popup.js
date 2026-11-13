@@ -11,6 +11,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const siteList = document.getElementById("enabledSites");
   const toggleListBtn = document.getElementById("toggleListBtn");
 
+  const apiKeyInput = document.getElementById("deeplApiKey");
+  const saveApiKeyBtn = document.getElementById("saveApiKeyBtn");
+  const apiKeyNote = document.getElementById("apiKeyNote");
+
+  chrome.storage.sync.get("deeplApiKey", (data) => {
+    if (data.deeplApiKey) {
+      apiKeyInput.value = data.deeplApiKey;
+    }
+  });
+
+  function saveApiKey() {
+    const key = apiKeyInput.value.trim();
+    chrome.storage.sync.set({ deeplApiKey: key }, () => {
+      apiKeyNote.style.opacity = "1";
+      setTimeout(() => (apiKeyNote.style.opacity = "0"), 1500);
+    });
+  }
+
+  saveApiKeyBtn.addEventListener("click", saveApiKey);
+  apiKeyInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      saveApiKey();
+    }
+  });
+
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const url = new URL(tabs[0].url);
     const domain = url.hostname;
